@@ -22,3 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // Use the lily version to get the Lily58 logo instead of the qmk logo
 #define OLED_FONT_H "lib/glcdfont_lily.c"
+
+#define QMK_ESC_OUTPUT F1
+#define QMK_ESC_INPUT D5
+#define QMK_LED B0
