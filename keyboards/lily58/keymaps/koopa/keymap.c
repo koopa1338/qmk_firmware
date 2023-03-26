@@ -1,3 +1,4 @@
+#include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
 
 enum layer_number {
@@ -16,6 +17,26 @@ enum layer_number {
   _L_12,
   _L_13,
   _L_14,
+};
+
+enum unicode_names {
+    SSS,
+    BAE,
+    SAE,
+    BOE,
+    SOE,
+    BUE,
+    SUE
+};
+
+const uint32_t PROGMEM unicode_map[] = {
+    [SSS]  = 0x00DF,  // ß
+    [BAE] = 0x00C4,  // Ä
+    [SAE]  = 0x00E4, // ä
+    [BOE]  = 0x00D6,  // Ö
+    [SOE] = 0x00F6,  // ö
+    [BUE]  = 0x00DC, // Ü
+    [SUE]  = 0x00FC, // ü
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -112,9 +133,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------.                        ,-----------------------------------------------------.
  * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |  ü/Ü   |        |  ö/Ö   |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |  ä/Ä   |   ß    |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |         |    |         |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
@@ -126,9 +147,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XP(SUE,BUE),XXXXX,XP(SAE,BAE) ,XXXX,XXXXXXX ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+     XXXXXXX ,XP(SAE,BAE) ,XP(SSS,SSS),XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
