@@ -2,43 +2,35 @@
 #include QMK_KEYBOARD_H
 
 enum layer_number {
-  _BASE = 0,
-  _L_1,
-  _L_2,
-  _L_JP, // jump layer
-  _L_4,
-  _L_5,
-  _L_6,
-  _L_7,
-  _L_8,
-  _L_9,
-  _L_10,
-  _L_11,
-  _L_12,
-  _L_13,
-  _L_14,
+    _BASE = 0,
+    _L_1,
+    _L_2,
+    _L_J, // jump layer
+    _L_4,
+    _L_5,
+    _L_6,
+    _L_7,
+    _L_8,
+    _L_9,
+    _L_10,
+    _L_11,
+    _L_12,
+    _L_13,
+    _L_14,
 };
 
-enum unicode_names {
-    SSS,
-    BAE,
-    SAE,
-    BOE,
-    SOE,
-    BUE,
-    SUE
-};
+enum unicode_names { SSS, BAE, SAE, BOE, SOE, BUE, SUE };
 
 const uint32_t PROGMEM unicode_map[] = {
-    [SSS]  = 0x00DF,  // ß
-    [BAE] = 0x00C4,  // Ä
-    [SAE]  = 0x00E4, // ä
-    [BOE]  = 0x00D6,  // Ö
-    [SOE] = 0x00F6,  // ö
-    [BUE]  = 0x00DC, // Ü
-    [SUE]  = 0x00FC, // ü
+    [SSS] = 0x00DF, // ß
+    [BAE] = 0x00C4, // Ä
+    [SAE] = 0x00E4, // ä
+    [BOE] = 0x00D6, // Ö
+    [SOE] = 0x00F6, // ö
+    [BUE] = 0x00DC, // Ü
+    [SUE] = 0x00FC, // ü
 };
-
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Base (layer 0)
@@ -51,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * | LShift |   Z    |   X    |   C    |   V    |   B    |   Esc   |    |  Bspc   |    N   |   M    |   ,    |   .    |   /    | RShift |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
- *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter   \  |  JUMP  |   L_2  |  RALT  |
+ *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter   \  |   L_2  |  JUMP  |  RALT  |
  *                         |        |        |        |/          /      \          \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
@@ -67,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
       KC_LSFT,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  , KC_ESC  ,      KC_BSPC ,  KC_N  ,  KC_M  , KC_COMM, KC_DOT , KC_SLSH, KC_RSFT,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              KC_LALT, KC_LGUI, TO(_L_1) ,  KC_SPC  ,       KC_ENT ,    TO(_L_J),TO(_L_2), KC_RALT
+                              KC_LALT, KC_LGUI, MO(_L_1) ,  KC_SPC  ,       KC_ENT ,    MO(_L_2),MO(_L_J), KC_RALT
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -79,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
  * |        |   <    |   [    |   {    |   (    |   ~    |                        |   `    |   )    |   }    |   ]    |   >    |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |   -    |        |         |    |  Del    |        |   _    |        |        |        |        |
+ * |        |        |        |        |        |        |         |    |  Del    |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
  *                         |        |        |        | /          /    \          \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
@@ -88,15 +80,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_L_1] = LAYOUT( //TODO: set correct keycodes
 
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO , KC_EXLM,  KC_AT ,KC_HASH , KC_DLR ,KC_PERC ,                         KC_CIRC ,KC_AMPR , KC_ASTR,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_LT , KC_LBRC, KC_LCBR, KC_LPRN, KC_TILD,                          KC_GRV ,KC_RPRN , KC_RCBR, KC_RBRC,  KC_GT ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,       KC_DEL ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                              KC_NO  ,  KC_NO , KC_TRNS ,     KC_NO ,        KC_NO ,      KC_NO ,  KC_NO ,  KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -104,9 +96,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------.                        ,-----------------------------------------------------.
  * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |Altgr(u)|        |Altgr(o)|        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |Altgr(a)|        |        |        |        |                        |   Left |  Down  |   Up   | Right  |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |         |    |         |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
@@ -114,28 +106,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                         |        |        |        |/          /      \          \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
-
+    #define AE RALT(KC_A)
+    #define OE RALT(KC_O)
+    #define UE RALT(KC_U)
 [_L_2] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,   UE   ,  KC_NO ,   OE   ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,   AE   ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                          KC_LEFT, KC_DOWN,  KC_UP ,KC_RIGHT,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+      KC_TRNS,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                              KC_NO  ,  KC_NO ,  KC_NO ,      KC_NO ,        KC_NO ,     KC_TRNS,  KC_NO , KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
-/* Workspace (Layer 3)
+/* Jump layer (Layer 3)
  * ,-----------------------------------------------------.                        ,-----------------------------------------------------.
+ * |        |  L_4   |        |        |        |        |                        |        |        |        |        |        |        |
+ * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |  ü/Ü   |        |  ö/Ö   |        |        |
- * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |  ä/Ä   |   ß    |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |         |    |         |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
@@ -145,27 +139,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
   [_L_J] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,TO(_L_4),  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XP(SUE,BUE),XXXXX,XP(SAE,BAE) ,XXXX,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XP(SAE,BAE) ,XP(SSS,SSS),XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                              KC_NO  ,  KC_NO ,  KC_NO ,      KC_NO ,        KC_NO ,     KC_TRNS,  KC_NO , KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
-  )
+  ),
 /* Layer 4
  * ,-----------------------------------------------------.                        ,-----------------------------------------------------.
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |   7    |   8    |   9    |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |   4    |   5    |   6    |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |        |   1    |   2    |   3    |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |         |    |         |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |         |    |         |        |   0    |   ,    |  Ent   |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
  *                         |        |        |        | /          /    \          \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
@@ -174,15 +168,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_4] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_7  ,  KC_8  ,  KC_9  ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_4  ,  KC_5  ,  KC_6  ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_1  ,  KC_2  ,  KC_3  ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_8  ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                              KC_NO  ,  KC_NO ,  KC_NO ,      KC_NO ,        KC_NO ,   TG(_BASE),  KC_NO , KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -203,18 +197,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_5] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
-                             _______, _______, _______,  _______, _______,  _______, _______, _______
 ),
 /* Layer 6
  * ,-----------------------------------------------------.                        ,-----------------------------------------------------.
@@ -233,15 +226,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_6] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -262,15 +255,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_7] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -291,15 +284,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_8] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -320,15 +313,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_9] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -349,15 +342,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_10] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -378,15 +371,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_11] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -407,15 +400,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_12] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -436,15 +429,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_13] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -465,67 +458,75 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_L_14] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,                         XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX , XXXXXXX ,      XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              XXXXXX , XXXXXX , XXXXXX ,    XXXXXXX ,      XXXXXXX ,     XXXXXX , XXXXXX , XXXXXX
+                                KC_NO ,   KC_NO ,   KC_NO ,      KC_NO ,        KC_NO ,       KC_NO ,   KC_NO ,   KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
 };
 
+// clang-format on
+
 // layer_state_t layer_state_set_user(layer_state_t state) {
 //   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 // }
 
-//SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
+// SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
-
-oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  return rotation;
-}
-
-// When you add source files to SRC in rules.mk, you can use functions.
-const char *read_layer_state(void);
-const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
-const char *read_keylog(void);
-const char *read_keylogs(void);
-
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
-bool oled_task_user(void) {
-  if (is_keyboard_master()) {
-    // If you want to change the display of OLED, you need to change here
-    oled_write_ln(read_layer_state(), false);
-    oled_write_ln(read_keylog(), false);
-    oled_write_ln(read_keylogs(), false);
-    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-    //oled_write_ln(read_host_led_state(), false);
-    //oled_write_ln(read_timelog(), false);
-  } else {
-    oled_write(read_logo(), false);
-  }
-    return false;
-}
+#include "oled.c"
 #endif // OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  if (record->event.pressed) {
-#ifdef OLED_ENABLE
-    set_keylog(keycode, record);
-#endif
+    // switch (keycode) {
+    //     case SSS:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("ß");
+    //         } else {
+    //         }
+    //     case SAE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("ä");
+    //         } else {
+    //         }
+    //     case BAE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("Ä");
+    //         } else {
+    //         }
+    //     case SUE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("ü");
+    //         } else {
+    //         }
+    //     case BUE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("Ü");
+    //         } else {
+    //         }
+    //     case SOE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("ö");
+    //         } else {
+    //         }
+    //     case BOE:
+    //         if (record->event.pressed) {
+    //             send_unicode_string("Ö");
+    //         } else {
+    //         }
+    //     switch (keycode) {
+    //   if (record->event.pressed) {
+    //         case
+    // #ifdef OLED_ENABLE
+    //     set_keylog(keycode, record);
+    // #endif
     // set_timelog();
-  }
-  return true;
+    // }
+    return true;
 }
