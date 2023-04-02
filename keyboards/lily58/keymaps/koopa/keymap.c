@@ -1,5 +1,5 @@
-#include "keycodes.h"
-#include "quantum_keycodes.h"
+// #include "keycodes.h"
+// #include "quantum_keycodes.h"
 #include QMK_KEYBOARD_H
 
 enum layer_number {
@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
  * |        |   <    |   [    |   {    |   (    |   \    |                        |   /    |   )    |   }    |   ]    |   >    |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |   -    |   +    |         |    |  Del    |        |   _    |   =    |        |        |        |
+ * |        |        |        |        |   -    |   +    |         |    |  Del    |   ^    |   _    |   =    |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
  *                         |        |        |        | /          /    \   Tab    \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
@@ -85,11 +85,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
        KC_F1 ,  KC_F2 ,  KC_F3 ,  KC_F4 ,  KC_F5 ,  KC_F6 ,                           KC_F7 ,  KC_F8 ,  KC_F9 , KC_F10 , KC_F11 , KC_F12 ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-       KC_NO ,KC_EXLM ,  KC_AT ,KC_HASH , KC_DLR ,KC_PERC ,                         KC_CIRC ,KC_AMPR , KC_GRV ,KC_ASTR ,  KC_NO ,   INC  ,
+       KC_NO ,KC_EXLM ,  KC_AT ,KC_HASH , KC_DLR ,KC_PERC ,                         KC_TILD ,KC_AMPR , KC_GRV ,KC_ASTR ,  KC_NO ,   INC  ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
      KC_TRNS ,  KC_LT ,KC_LBRC ,KC_LCBR ,KC_LPRN ,KC_BSLS ,                         KC_SLSH ,KC_RPRN ,KC_RCBR ,KC_RBRC ,  KC_GT ,   DEC  ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     KC_TRNS ,  KC_NO ,  KC_NO ,  KC_NO ,KC_MINS ,KC_PLUS ,   KC_NO ,       KC_DEL , KC_NO  ,KC_UNDS ,KC_EQUAL,  KC_NO ,  KC_NO ,KC_TRNS ,
+     KC_TRNS ,  KC_NO ,  KC_NO ,  KC_NO ,KC_MINS ,KC_PLUS ,   KC_NO ,       KC_DEL ,KC_CIRC ,KC_UNDS ,KC_EQUAL,  KC_NO ,  KC_NO ,KC_TRNS ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
                               KC_NO  ,  KC_NO , KC_TRNS ,     KC_NO ,       KC_TAB ,      KC_NO ,  KC_NO ,  KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
@@ -482,12 +482,102 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 //   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 // }
 
-// SSD1306 OLED update loop, make sure to enable OLED_ENABLE=yes in rules.mk
 #ifdef OLED_ENABLE
-#include "oled.c"
-#endif // OLED_ENABLE
+// #include "bongo_cat.h"
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+  if (!is_keyboard_master())
+    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
+  return rotation;
+}
+
+// When you add source files to SRC in rules.mk, you can use functions.
+const char *read_layer_state(void);
+const char *read_logo(void);
+void set_keylog(uint16_t keycode, keyrecord_t *record);
+const char *read_keylog(void);
+const char *read_keylogs(void);
+
+
+void render_default_layer_state(void) {
+    oled_write_ln_P(PSTR("Active Layer"), false);
+    oled_write_ln_P(PSTR(""), false);
+    switch (get_highest_layer(layer_state)) {
+        case _BASE:
+            oled_write_ln_P(PSTR("Default"), false);
+            break;
+        case _L_J:
+            oled_write_ln_P(PSTR("Jump"), false);
+            break;
+        case _L_1:
+            oled_write_ln_P(PSTR("L1"), false);
+            break;
+        case _L_2:
+            oled_write_ln_P(PSTR("L2"), false);
+            break;
+        case _L_4:
+            oled_write_ln_P(PSTR("Numpad"), false);
+            break;
+        case _L_5:
+            oled_write_ln_P(PSTR("EurKey"), false);
+            break;
+        case _L_6:
+            oled_write_ln_P(PSTR("L6"), false);
+            break;
+        case _L_7:
+            oled_write_ln_P(PSTR("L7"), false);
+            break;
+        case _L_8:
+            oled_write_ln_P(PSTR("L8"), false);
+            break;
+        case _L_9:
+            oled_write_ln_P(PSTR("L9"), false);
+            break;
+        case _L_10:
+            oled_write_ln_P(PSTR("L10"), false);
+            break;
+        case _L_11:
+            oled_write_ln_P(PSTR("L11"), false);
+            break;
+        case _L_12:
+            oled_write_ln_P(PSTR("L12"), false);
+            break;
+        case _L_13:
+            oled_write_ln_P(PSTR("L13"), false);
+            break;
+        case _L_14:
+            oled_write_ln_P(PSTR("L14"), false);
+            break;
+        default:
+            oled_write_ln_P(PSTR("Undefined"), false);
+    }
+}
+
+// const char *read_mode_icon(bool swap);
+// const char *read_host_led_state(void);
+// void set_timelog(void);
+// const char *read_timelog(void);
+
+bool oled_task_user(void) {
+  if (is_keyboard_master()) {
+    // If you want to change the display of OLED, you need to change here
+    render_default_layer_state();
+    // oled_write_ln(read_keylogs(), false);
+    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
+    //oled_write_ln(read_host_led_state(), false);
+    //oled_write_ln(read_timelog(), false);
+  } else {
+    // draw_bongo();
+    oled_write(read_logo(), false);
+  }
+    return false;
+}
+
+#endif //OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        set_keylog(keycode, record);
+    }
     // switch (keycode) {
     //     case SSS:
     //         if (record->event.pressed) {
