@@ -1,6 +1,6 @@
-# BOOTLOADER = rp2040
-# MCU = kb2040
-# CONVERT_TO = kb2040
+BOOTLOADER = rp2040
+MCU = kb2040
+CONVERT_TO = kb2040
 BOOTMAGIC_ENABLE = no       # Enable Bootmagic Lite
 MOUSEKEY_ENABLE = no        # Mouse keys
 EXTRAKEY_ENABLE = no        # Audio control and System control
