@@ -20,17 +20,14 @@ enum layer_number {
     _L_14,
 };
 
-enum unicode_names { SSS, BAE, SAE, BOE, SOE, BUE, SUE };
+#define TD_COLON KC_SCLN
 
-const uint32_t PROGMEM unicode_map[] = {
-    [SSS] = 0x00DF, // ß
-    [BAE] = 0x00C4, // Ä
-    [SAE] = 0x00E4, // ä
-    [BOE] = 0x00D6, // Ö
-    [SOE] = 0x00F6, // ö
-    [BUE] = 0x00DC, // Ü
-    [SUE] = 0x00FC, // ü
-};
+#ifdef TAP_DANCE_ENABLE
+#include "tap_dance.h"
+#undef TD_COLON
+#define TD_COLON TD(DANCE_COLON)
+#endif
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -44,8 +41,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * | LShift |   Z    |   X    |   C    |   V    |   B    |   Esc   |    |  Bspc   |    N   |   M    |   ,    |   .    |   "    | RShift |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
- *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter   \  |   L_2  |   L_2  |  RALT  |
- *                         |        |        |        |/          /      \          \ |        |        |        |
+ *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter/  \  |   L_2  |   L_2  |  RALT  |
+ *                         |        |        |        |/          /      \  RShift  \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
 
@@ -56,11 +53,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
       KC_NO  ,  KC_Q  ,  KC_W  ,  KC_E  ,  KC_R  ,  KC_T  ,                           KC_Y  ,  KC_U  ,  KC_I  ,  KC_O  ,  KC_P  ,TO(_L_J),
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-     KC_LCTL ,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,                           KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,KC_SCLN ,KC_QUOT ,
+     KC_LCTL ,  KC_A  ,  KC_S  ,  KC_D  ,  KC_F  ,  KC_G  ,                           KC_H  ,  KC_J  ,  KC_K  ,  KC_L  ,TD_COLON,KC_QUOT ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
      KC_LSFT ,  KC_Z  ,  KC_X  ,  KC_C  ,  KC_V  ,  KC_B  , KC_ESC  ,      KC_BSPC ,  KC_N  ,  KC_M  ,KC_COMM , KC_DOT , KC_DQT ,KC_RSFT ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                             KC_LALT ,KC_LGUI , MO(_L_1) ,  KC_SPC  ,       KC_ENT ,    MO(_L_2),MO(_L_2), KC_RALT
+                             KC_LALT ,KC_LGUI , MO(_L_1) ,  KC_SPC  ,      SC_SENT ,    MO(_L_2),MO(_L_5), KC_RALT
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -105,7 +102,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * | Shift  |        |        |        |        |        |         |    |         |        |        |        |        |        | Shift  |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
- *                         |  Alt   |        |        | /          /    \          \  |        |        | AltGr  |
+ *                         |        |        |        | /          /    \          \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
@@ -124,7 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
       KC_TRNS,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,KC_TRNS ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                             KC_TRNS ,  KC_NO ,  KC_NO ,      KC_NO ,        KC_NO ,     KC_NO  , KC_NO  , KC_TRNS
+                               KC_NO ,  KC_NO ,  KC_NO ,      KC_NO ,        KC_NO ,     KC_NO  , KC_NO  ,  KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -180,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,      KC_BSPC ,KC_PAST , KC_P1  , KC_P2  , KC_P3  ,KC_PSLS ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                              KC_NO  ,  KC_NO ,MO(_L_1),      KC_NO ,       KC_ENT ,      KC_0  , KC_COMM, KC_NO
+                              KC_NO  ,  KC_NO ,MO(_L_1),      KC_NO ,       KC_ENT ,      KC_0  ,KC_COMM , KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -190,9 +187,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |                        |        |        |        |        |        |        |
+ * |        |        |        |        |        |        |                        |  Home  | PgDown |  PgUp  |  End   |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
- * |        |        |        |        |        |        |         |    |         |        |        |        |        |        |        |
+ * |Caps W  |        |        |        |        |        |AS Toggle|    |         |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
  *                         |        |        |        | /          /    \          \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
@@ -205,9 +202,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
        KC_NO ,  KC_NO ,  KC_NO , KC_NO  ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
-       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
+       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                         KC_HOME ,KC_PGDN ,KC_PGUP , KC_END ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-       KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,   KC_NO ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO , KC_NO  ,
+     CW_TOGG ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO , AS_TOGG ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
                                KC_NO ,   KC_NO ,   KC_NO ,    KC_NO ,        KC_NO ,     KC_NO  ,  KC_NO ,  KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
@@ -483,20 +480,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // }
 
 #ifdef OLED_ENABLE
-#include "bongo_cat.h"
+#    include "bongo_cat.h"
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (!is_keyboard_master())
-    return OLED_ROTATION_180;  // flips the display 180 degrees if offhand
-  return rotation;
+    if (!is_keyboard_master()) return OLED_ROTATION_180; // flips the display 180 degrees if offhand
+    return rotation;
 }
 
 // When you add source files to SRC in rules.mk, you can use functions.
 const char *read_layer_state(void);
 const char *read_logo(void);
-void set_keylog(uint16_t keycode, keyrecord_t *record);
+void        set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
-
 
 void render_default_layer_state(void) {
     oled_write_ln_P(PSTR("Active Layer"), false);
@@ -558,21 +553,21 @@ void render_default_layer_state(void) {
 // const char *read_timelog(void);
 
 bool oled_task_user(void) {
-  if (is_keyboard_master()) {
-    // If you want to change the display of OLED, you need to change here
-    render_default_layer_state();
-    // oled_write_ln(read_keylogs(), false);
-    //oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-    //oled_write_ln(read_host_led_state(), false);
-    //oled_write_ln(read_timelog(), false);
-  } else {
-    draw_bongo();
-    // oled_write(read_logo(), false);
-  }
+    if (is_keyboard_master()) {
+        // If you want to change the display of OLED, you need to change here
+        render_default_layer_state();
+        // oled_write_ln(read_keylogs(), false);
+        // oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
+        // oled_write_ln(read_host_led_state(), false);
+        // oled_write_ln(read_timelog(), false);
+    } else {
+        draw_bongo();
+        // oled_write(read_logo(), false);
+    }
     return false;
 }
 
-#endif //OLED_ENABLE
+#endif // OLED_ENABLE
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
