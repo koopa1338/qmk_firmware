@@ -1,5 +1,4 @@
-// #include "keycodes.h"
-// #include "quantum_keycodes.h"
+#include "process_auto_shift.h"
 #include QMK_KEYBOARD_H
 
 enum layer_number {
@@ -23,9 +22,9 @@ enum layer_number {
 #define TD_COLON KC_SCLN
 
 #ifdef TAP_DANCE_ENABLE
-#include "tap_dance.h"
-#undef TD_COLON
-#define TD_COLON TD(DANCE_COLON)
+#    include "tap_dance.h"
+#    undef TD_COLON
+#    define TD_COLON TD(DANCE_COLON)
 #endif
 
 // clang-format off
@@ -41,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
  * | LShift |   Z    |   X    |   C    |   V    |   B    |   Esc   |    |  Bspc   |    N   |   M    |   ,    |   .    |   "    | RShift |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
- *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter/  \  |   L_2  |   L_2  |  RALT  |
+ *                         |  LAlt  |  LGUI  |  L_1   | /  Space   /    \  Enter/  \  |   L_2  |   L_5  |  RALT  |
  *                         |        |        |        |/          /      \  RShift  \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
@@ -189,9 +188,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
  * |        |        |        |        |        |        |                        |  Home  | PgDown |  PgUp  |  End   |        |        |
  * |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
- * |Caps W  |        |        |        |        |        |AS Toggle|    |         |        |        |        |        |        |        |
+ * |Caps W  |        |        |        |        |        | AS Dec  |    | AS Inc  |        |        |        |        |        |        |
  * `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
- *                         |        |        |        | /          /    \          \  |        |        |        |
+ *                         |        |        |        | /          /    \AS Toggle \  |        |        |        |
  *                         |        |        |        |/          /      \          \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
@@ -204,9 +203,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  // |--------+--------+--------+--------+--------+--------|                        |--------+--------+--------+--------+--------+--------|
        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                         KC_HOME ,KC_PGDN ,KC_PGUP , KC_END ,  KC_NO ,  KC_NO ,
  // |--------+--------+--------+--------+--------+--------|---------.    ,---------|--------+--------+--------+--------+--------+--------|
-     CW_TOGG ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO , AS_TOGG ,        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
+     CW_TOGG ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO , AS_DOWN ,        AS_UP ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
  // `-----------------------------------------------------|---------|    |---------|-----------------------------------------------------'
-                               KC_NO ,   KC_NO ,   KC_NO ,    KC_NO ,        KC_NO ,     KC_NO  ,  KC_NO ,  KC_NO
+                               KC_NO ,   KC_NO ,   KC_NO ,    KC_NO ,      AS_TOGG ,     KC_NO  ,  KC_NO ,  KC_NO
  //                         |        |        |        |/          /      \          \ |        |        |        |
  //                         `-------------------------------------'        '----------''--------------------------'
 ),
@@ -481,6 +480,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef OLED_ENABLE
 #    include "bongo_cat.h"
+#    include "oled_driver.h"
+
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     if (!is_keyboard_master()) return OLED_ROTATION_180; // flips the display 180 degrees if offhand
     return rotation;
@@ -494,75 +495,77 @@ const char *read_keylog(void);
 const char *read_keylogs(void);
 
 void render_default_layer_state(void) {
-    oled_write_ln_P(PSTR("Active Layer"), false);
-    oled_write_ln_P(PSTR(""), false);
+    oled_clear();
+    oled_write_P(PSTR("Layer: "), false);
     switch (get_highest_layer(layer_state)) {
         case _BASE:
-            oled_write_ln_P(PSTR("Default"), false);
+            oled_write_P(PSTR("Base"), false);
             break;
         case _L_J:
-            oled_write_ln_P(PSTR("Jump"), false);
+            oled_write_P(PSTR("Jump"), false);
             break;
         case _L_1:
-            oled_write_ln_P(PSTR("L1"), false);
+            oled_write_P(PSTR("L1"), false);
             break;
         case _L_2:
-            oled_write_ln_P(PSTR("L2"), false);
+            oled_write_P(PSTR("L2"), false);
             break;
         case _L_4:
-            oled_write_ln_P(PSTR("Numpad"), false);
+            oled_write_P(PSTR("Numpad"), false);
+            oled_advance_page(true);
+            oled_advance_page(true);
+            oled_write_P(PSTR("Numlock: "), false);
+            led_t led_state = host_keyboard_led_state();
+            oled_write_P(led_state.num_lock ? PSTR("on") : PSTR("off"), false);
             break;
         case _L_5:
-            oled_write_ln_P(PSTR("EurKey"), false);
+            oled_write_P(PSTR("Settings"), false);
+            oled_advance_page(true);
+            oled_advance_page(true);
+            oled_write_P(PSTR("Auto Shift: "), false);
+            if (!get_autoshift_state()) {
+                oled_write_P(PSTR("off"), false);
+            } else {
+                oled_write(get_u8_str(get_generic_autoshift_timeout(), ' '), false);
+            }
             break;
         case _L_6:
-            oled_write_ln_P(PSTR("L6"), false);
+            oled_write_P(PSTR("L6"), false);
             break;
         case _L_7:
-            oled_write_ln_P(PSTR("L7"), false);
+            oled_write_P(PSTR("L7"), false);
             break;
         case _L_8:
-            oled_write_ln_P(PSTR("L8"), false);
+            oled_write_P(PSTR("L8"), false);
             break;
         case _L_9:
-            oled_write_ln_P(PSTR("L9"), false);
+            oled_write_P(PSTR("L9"), false);
             break;
         case _L_10:
-            oled_write_ln_P(PSTR("L10"), false);
+            oled_write_P(PSTR("L10"), false);
             break;
         case _L_11:
-            oled_write_ln_P(PSTR("L11"), false);
+            oled_write_P(PSTR("L11"), false);
             break;
         case _L_12:
-            oled_write_ln_P(PSTR("L12"), false);
+            oled_write_P(PSTR("L12"), false);
             break;
         case _L_13:
-            oled_write_ln_P(PSTR("L13"), false);
+            oled_write_P(PSTR("L13"), false);
             break;
         case _L_14:
-            oled_write_ln_P(PSTR("L14"), false);
+            oled_write_P(PSTR("L14"), false);
             break;
         default:
-            oled_write_ln_P(PSTR("Undefined"), false);
+            oled_write_P(PSTR("Undefined"), false);
     }
 }
 
-// const char *read_mode_icon(bool swap);
-// const char *read_host_led_state(void);
-// void set_timelog(void);
-// const char *read_timelog(void);
-
 bool oled_task_user(void) {
     if (is_keyboard_master()) {
-        // If you want to change the display of OLED, you need to change here
         render_default_layer_state();
-        // oled_write_ln(read_keylogs(), false);
-        // oled_write_ln(read_mode_icon(keymap_config.swap_lalt_lgui), false);
-        // oled_write_ln(read_host_led_state(), false);
-        // oled_write_ln(read_timelog(), false);
     } else {
         draw_bongo();
-        // oled_write(read_logo(), false);
     }
     return false;
 }
@@ -573,49 +576,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         set_keylog(keycode, record);
     }
-    // switch (keycode) {
-    //     case SSS:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("ß");
-    //         } else {
-    //         }
-    //     case SAE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("ä");
-    //         } else {
-    //         }
-    //     case BAE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("Ä");
-    //         } else {
-    //         }
-    //     case SUE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("ü");
-    //         } else {
-    //         }
-    //     case BUE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("Ü");
-    //         } else {
-    //         }
-    //     case SOE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("ö");
-    //         } else {
-    //         }
-    //     case BOE:
-    //         if (record->event.pressed) {
-    //             send_unicode_string("Ö");
-    //         } else {
-    //         }
-    //     switch (keycode) {
-    //   if (record->event.pressed) {
-    //         case
-    // #ifdef OLED_ENABLE
-    //     set_keylog(keycode, record);
-    // #endif
-    // set_timelog();
-    // }
     return true;
 }
