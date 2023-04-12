@@ -273,7 +273,7 @@ bool oled_task_user(void) {
 
 #endif // OLED_ENABLE
 
-//void ucis_start_user(void);
+// void ucis_start_user(void);
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -281,7 +281,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 ucis_start();
             }
-            break;
+            return false;
     }
     return true;
 }
