@@ -28,6 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define AUTO_SHIFT_TIMEOUT 200
 #define TAPPING_TERM 200
+#define UCIS_MAX_CODE_POINTS 30
+#define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
 
 // #undef RGBLED_NUM
 // #define RGBLIGHT_EFFECT_BREATHING
