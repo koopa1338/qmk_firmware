@@ -30,6 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define TAPPING_TERM 200
 #define UCIS_MAX_CODE_POINTS 55
 #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
+#define NO_AUTO_SHIFT_SPECIAL true
 
 // #undef RGBLED_NUM
 // #define RGBLIGHT_EFFECT_BREATHING
