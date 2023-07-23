@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_RIGHT
 // #define EE_HANDS
 
-#define AUTO_SHIFT_TIMEOUT 200
+#define AUTO_SHIFT_TIMEOUT 175
 #define TAPPING_TERM 200
 #define UCIS_MAX_CODE_POINTS 55
 #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
