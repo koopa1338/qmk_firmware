@@ -2,6 +2,8 @@
 #include "process_auto_shift.h"
 #include "process_ucis.h"
 #include "kaomoji.h"
+#include "keymap.h"
+
 
 enum layer_number {
     _BASE = 0,
@@ -98,11 +100,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                         |        |        |        |/          /      \          \ |        |        |        |
  *                         `-------------------------------------'        '----------''--------------------------'
  */
-    #define AE RALT(KC_A)
-    #define OE RALT(KC_O)
-    #define UE RALT(KC_U)
-    #define SS RALT(KC_S)
-    #define EUR RALT(KC_5)
+
 [_L_2] = LAYOUT(
  // ,-----------------------------------------------------.                        ,-----------------------------------------------------.
        KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,                           KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,  KC_NO ,
