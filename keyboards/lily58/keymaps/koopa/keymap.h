@@ -5,3 +5,4 @@
 #define UE RALT(KC_U)
 #define SS RALT(KC_S)
 #define EUR RALT(KC_5)
+#define GRAD RALT(TD_COLON)
