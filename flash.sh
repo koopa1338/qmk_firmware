@@ -1,4 +1,5 @@
 #!/bin/bash
+./util/docker_build.sh lily58:koopa
 
 MAX_RETRY=15
 
