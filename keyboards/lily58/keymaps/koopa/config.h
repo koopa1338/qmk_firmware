@@ -32,6 +32,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define UNICODE_SELECTED_MODES UNICODE_MODE_LINUX
 #define NO_AUTO_SHIFT_SPECIAL true
 
+#define LEADER_TIMEOUT 200
+#define LEADER_PER_KEY_TIMING
+#define LEADER_NO_TIMEOUT
+#define LEADER_KEY_STRICT_KEY_PROCESSING
+
 // #undef RGBLED_NUM
 // #define RGBLIGHT_EFFECT_BREATHING
 // #define RGBLIGHT_EFFECT_RAINBOW_MOOD

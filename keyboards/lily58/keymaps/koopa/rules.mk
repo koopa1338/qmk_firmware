@@ -17,6 +17,7 @@ AUTO_SHIFT_ENABLE = yes
   SRC += autoshift.c
 TAP_DANCE_ENABLE = no
 CAPS_WORD_ENABLE = yes
+LEADER_ENABLE = yes
 UCIS_ENABLE = yes
 
 # If you want to change the display of OLED, you need to change here
